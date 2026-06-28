@@ -1,0 +1,2 @@
+reliable_min=1147000
+reliable_max=187650000

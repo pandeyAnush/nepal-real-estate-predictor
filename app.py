@@ -96,20 +96,24 @@ st.header("Property details")
 
 title = st.text_input(
     "Property title / description",
-    "Modern bungalow with parking and garden"
+    value="",
+    placeholder="e.g. Modern bungalow with parking and garden"
 )
 
 col1, col2, col3 = st.columns(3)
 with col1:
-    area = st.number_input("Land area (sq ft)", min_value=100, max_value=20000, value=1500)
+    area = st.number_input("Land area (sq ft)", min_value=100, max_value=20000, value=None, placeholder="e.g. 1500")
 with col2:
-    bedrooms = st.number_input("Bedrooms", min_value=0, max_value=20, value=4)
+    bedrooms = st.number_input("Bedrooms", min_value=0, max_value=20, value=None, placeholder="e.g. 4")
 with col3:
-    bathrooms = st.number_input("Bathrooms", min_value=0, max_value=20, value=3)
+    bathrooms = st.number_input("Bathrooms", min_value=0, max_value=20, value=None, placeholder="e.g. 3")
 
 
 
 if st.button("Predict price", type="primary"):
+    if not title.strip() or area is None or bedrooms is None or bathrooms is None:
+        st.warning("Please fill in all fields first.")
+        st.stop()
     features = build_feature_row(title, area, bedrooms, bathrooms)
     predicted = model.predict(features)[0]
 
